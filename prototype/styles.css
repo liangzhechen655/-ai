@@ -200,6 +200,49 @@ h2 {
   margin-bottom: 16px;
 }
 
+.diagnosis-board {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  padding: 18px;
+  margin-bottom: 16px;
+}
+
+.diagnosis-board h3 {
+  color: var(--blue);
+  font-size: 22px;
+}
+
+.diagnosis-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.diagnosis-metrics div {
+  background: var(--mint);
+  border-left: 4px solid var(--green);
+  padding: 12px;
+  min-height: 68px;
+}
+
+.diagnosis-metrics strong {
+  display: block;
+  color: var(--blue);
+  font-size: 24px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.diagnosis-metrics span {
+  color: #385246;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .summary-band .eyebrow {
   color: rgba(255, 255, 255, 0.72);
 }
@@ -353,6 +396,15 @@ h2 {
   gap: 10px;
 }
 
+.workflow-list {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.workflow-list li {
+  margin-bottom: 8px;
+}
+
 .price-list div {
   display: grid;
   gap: 3px;
@@ -389,6 +441,7 @@ h2 {
 
 @media (max-width: 1120px) {
   .summary-band,
+  .diagnosis-board,
   .content-layout {
     grid-template-columns: 1fr;
   }
@@ -413,6 +466,8 @@ h2 {
   }
 
   .brand {
+    display: grid;
+    grid-template-columns: 46px minmax(0, 1fr);
     align-items: center;
   }
 
@@ -423,6 +478,7 @@ h2 {
   h2 {
     font-size: 24px;
     overflow-wrap: anywhere;
+    word-break: break-all;
   }
 
   .form-grid {
@@ -439,7 +495,8 @@ h2 {
   .message-grid,
   .timeline,
   .right-rail,
-  .kpi-strip {
+  .kpi-strip,
+  .diagnosis-metrics {
     grid-template-columns: 1fr;
   }
 
@@ -458,6 +515,8 @@ h2 {
 
   .brand p {
     font-size: 12px;
+    white-space: normal;
+    word-break: break-all;
   }
 
   .summary-band {

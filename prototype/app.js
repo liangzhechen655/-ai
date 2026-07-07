@@ -8,7 +8,7 @@ const toast = document.querySelector("#toast");
 const evidenceList = document.querySelector("#evidenceList");
 const tabs = document.querySelectorAll(".tab");
 
-let currentTab = "posts";
+let currentTab = "diagnosis";
 let latestText = "";
 let currentData = {};
 
@@ -105,6 +105,62 @@ function buildValidation(data) {
     ["D12-D13", "优化 Prompt 和交付模板，形成可复制的每周服务流程。"],
     ["D14", "测试 99/299 元付费意愿，决定是否继续推进产品化。"]
   ];
+}
+
+function computeScores(data) {
+  const productComplexity = Math.min(10, Math.floor(data.product.length / 8));
+  const toneBonus = data.tone === "高性价比" ? 4 : data.tone === "年轻有梗" ? 6 : 3;
+  const scene = 76 + toneBonus;
+  const conversion = 64 + productComplexity;
+  const community = data.goal === "提升社群复购" ? 84 : 72;
+  const reply = data.goal === "处理差评" ? 86 : 80;
+  const health = Math.round((scene + conversion + community + reply) / 4);
+  return { scene, conversion, community, reply, health };
+}
+
+function updateScores(data) {
+  const scores = computeScores(data);
+  document.querySelector("#healthScore").textContent = `增长健康分 ${scores.health}`;
+  document.querySelector("#sceneScore").textContent = scores.scene;
+  document.querySelector("#conversionScore").textContent = scores.conversion;
+  document.querySelector("#communityScore").textContent = scores.community;
+  document.querySelector("#replyScore").textContent = scores.reply;
+}
+
+function renderDiagnosis(data) {
+  const scores = computeScores(data);
+  output.innerHTML = `
+    <article class="content-card wide">
+      <h3>AI 店铺诊断结论</h3>
+      <p>${data.storeName} 当前最值得验证的是“${data.goal}”。AI 判断该店学生场景感较强，但到店转化链路仍可加强，需要把内容发布、暗号福利、微信群沉淀和评论回复连成闭环。</p>
+    </article>
+    <article class="content-card">
+      <h3>优势</h3>
+      <ul>
+        <li>产品适合绑定“下课/晚自习/宿舍拼单”等校园场景。</li>
+        <li>客单价 ${data.price}，学生决策门槛较低。</li>
+        <li>${data.tone} 风格适合做小红书和朋友圈轻内容。</li>
+      </ul>
+    </article>
+    <article class="content-card">
+      <h3>短板</h3>
+      <ul>
+        <li>如果只发图文，难以把浏览转成到店。</li>
+        <li>缺少老客召回和微信群复购机制。</li>
+        <li>评论区需要从“礼貌回复”升级成“二次转化”。</li>
+      </ul>
+    </article>
+    <article class="content-card wide">
+      <h3>本周增长实验</h3>
+      <div class="message-grid">
+        <div class="message-item">实验 A：小红书标题强调“下课 10 分钟”。指标：收藏/评论。</div>
+        <div class="message-item">实验 B：微信群暗号福利。指标：进群人数/到店暗号次数。</div>
+        <div class="message-item">实验 C：短视频拍门店真实制作过程。指标：完播和私信。</div>
+        <div class="message-item">实验 D：差评回复加入补偿路径。指标：用户二次沟通率。</div>
+      </div>
+    </article>
+  `;
+  latestText = `增长健康分 ${scores.health}\n优势：学生场景强、客单价低、适合轻内容。\n短板：转化链路和社群复购需要加强。\n本周实验：小红书标题、微信群暗号、短视频制作过程、评论二次转化。`;
 }
 
 function renderPosts(data) {
@@ -208,7 +264,9 @@ function render() {
   outputTitle.textContent = `${data.storeName} · 7 天 AI 经营内容包`;
   strategyText.textContent = `${data.storeName} 的本周目标是“${data.goal}”。策略是把 ${data.product} 绑定到${data.audience}的真实场景，用内容、短视频、社群和评论回复形成一套轻量经营闭环。`;
   renderEvidence(data);
+  updateScores(data);
 
+  if (currentTab === "diagnosis") renderDiagnosis(data);
   if (currentTab === "posts") renderPosts(data);
   if (currentTab === "scripts") renderScripts(data);
   if (currentTab === "community") renderCommunity(data);

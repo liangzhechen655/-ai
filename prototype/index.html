@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>校边 AI 小店参谋 Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <aside class="panel input-panel">
+      <div class="brand">
+        <span class="mark">AI</span>
+        <div>
+          <h1>校边 AI 小店参谋</h1>
+          <p>输入店铺信息，生成一周可发布的经营内容包。</p>
+        </div>
+      </div>
+
+      <form id="merchantForm">
+        <label>
+          店铺类型
+          <select id="storeType">
+            <option>奶茶店</option>
+            <option>咖啡店</option>
+            <option>小吃店</option>
+            <option>美甲店</option>
+            <option>打印店</option>
+            <option>桌游店</option>
+          </select>
+        </label>
+
+        <label>
+          店铺名称
+          <input id="storeName" value="南门柠檬茶" />
+        </label>
+
+        <label>
+          主推产品/服务
+          <input id="product" value="手打柠檬茶、鸭屎香柠檬茶、第二杯半价" />
+        </label>
+
+        <div class="row">
+          <label>
+            客单价
+            <input id="price" value="12-18 元" />
+          </label>
+          <label>
+            目标用户
+            <input id="audience" value="下课后的大学生" />
+          </label>
+        </div>
+
+        <label>
+          本周目标
+          <select id="goal">
+            <option>提高到店客流</option>
+            <option>推广新品</option>
+            <option>提升社群复购</option>
+            <option>处理差评</option>
+          </select>
+        </label>
+
+        <label>
+          店铺风格
+          <select id="tone">
+            <option>年轻有梗</option>
+            <option>温柔治愈</option>
+            <option>高性价比</option>
+            <option>专业可信</option>
+          </select>
+        </label>
+
+        <button type="submit">生成 7 天内容包</button>
+      </form>
+    </aside>
+
+    <section class="workspace">
+      <div class="toolbar">
+        <div>
+          <p class="eyebrow">MVP Demo</p>
+          <h2 id="outputTitle">南门柠檬茶 · 7 天 AI 经营内容包</h2>
+        </div>
+        <button id="copyBtn" type="button">复制内容</button>
+      </div>
+
+      <div id="output" class="output"></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

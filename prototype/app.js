@@ -7,23 +7,121 @@ const downloadBtn = document.querySelector("#downloadBtn");
 const toast = document.querySelector("#toast");
 const evidenceList = document.querySelector("#evidenceList");
 const tabs = document.querySelectorAll(".tab");
+const presetButtons = document.querySelectorAll("[data-preset]");
 
 let currentTab = "diagnosis";
 let latestText = "";
 let currentData = {};
 
-const postAngles = [
-  "下课后 10 分钟的快乐补给",
-  "学生党也能闭眼冲的高性价比",
-  "本周限定福利提醒",
-  "适合和室友一起打卡的组合",
-  "晚自习前后的轻松小奖励",
-  "周末出门前的顺路选择",
-  "老顾客复购提醒"
-];
+const audienceProfiles = {
+  student: {
+    label: "学生",
+    rhythm: ["下课后", "午饭前后", "晚自习前", "宿舍拼单", "周末出门前"],
+    motivation: ["近", "便宜", "适合拍照", "能和室友一起买", "有隐藏福利"],
+    channel: "小红书、朋友圈、校园微信群",
+    conversion: "到店报暗号、宿舍拼单、进群领下周福利",
+    metric: "收藏/评论、到店暗号次数、进群人数",
+    sceneLabel: "学生场景感"
+  },
+  worker: {
+    label: "周边工人",
+    rhythm: ["早班前", "午休 20 分钟", "下午补能", "下班路上", "工友拼单"],
+    motivation: ["实惠", "出餐快", "分量足", "能打包", "离工地近"],
+    channel: "微信群、短视频同城、门口海报",
+    conversion: "工友拼单、电话/微信预订、午休快取",
+    metric: "拼单人数、预订次数、午休高峰出单量",
+    sceneLabel: "班次场景感"
+  },
+  faculty: {
+    label: "教职工",
+    rhythm: ["早课前", "课间", "午休", "会议前后", "下班前"],
+    motivation: ["稳定", "干净", "省心", "可开发票", "适合办公室分享"],
+    channel: "朋友圈、办公室群、校内社群",
+    conversion: "办公室团购、提前预订、长期优惠",
+    metric: "办公室订单数、复购次数、团购金额",
+    sceneLabel: "办公场景感"
+  },
+  resident: {
+    label: "社区居民",
+    rhythm: ["买菜顺路", "接娃前后", "晚饭后散步", "周末家庭消费", "老客复购"],
+    motivation: ["离家近", "放心", "适合家人", "老客优惠", "服务熟悉"],
+    channel: "社区群、朋友圈、门店海报",
+    conversion: "邻里推荐、会员卡、老客储值",
+    metric: "老客复购、会员新增、储值金额",
+    sceneLabel: "社区场景感"
+  },
+  office: {
+    label: "上班族",
+    rhythm: ["通勤路上", "午休", "下午茶", "加班前", "下班路上"],
+    motivation: ["效率", "品质稳定", "可外带", "适合团队", "不耽误时间"],
+    channel: "企业微信群、外卖平台、同城短视频",
+    conversion: "办公室拼单、企业下午茶、提前下单",
+    metric: "拼单金额、外带订单、企业客户数",
+    sceneLabel: "办公消费场景感"
+  },
+  custom: {
+    label: "自定义客群",
+    rhythm: ["高峰前", "午间", "傍晚", "周末", "老客回访"],
+    motivation: ["方便", "实惠", "稳定", "省时间", "服务熟悉"],
+    channel: "朋友圈、微信群、同城内容平台",
+    conversion: "暗号福利、预约快取、老客召回",
+    metric: "咨询量、到店数、复购数",
+    sceneLabel: "客群场景感"
+  }
+};
+
+const locationProfiles = {
+  campus: "学校门口/校内生活圈",
+  construction: "工地/产业园旁",
+  office: "写字楼/办公区旁",
+  community: "社区/居民区旁"
+};
+
+const presets = {
+  student: {
+    storeType: "奶茶店",
+    storeName: "南门柠檬茶",
+    product: "手打柠檬茶、鸭屎香柠檬茶、第二杯半价",
+    audienceType: "student",
+    price: "12-18 元",
+    audience: "下课后的大学生",
+    locationContext: "campus",
+    goal: "提高到店客流",
+    tone: "年轻有梗"
+  },
+  worker: {
+    storeType: "快餐店",
+    storeName: "东门工友饭堂",
+    product: "大份盖浇饭、免费加饭、午休快取套餐",
+    audienceType: "worker",
+    price: "15-22 元",
+    audience: "附近工地和产业园工人",
+    locationContext: "construction",
+    goal: "提高到店客流",
+    tone: "高性价比"
+  },
+  faculty: {
+    storeType: "咖啡店",
+    storeName: "北苑咖啡站",
+    product: "美式咖啡、办公室拼单、会议咖啡配送",
+    audienceType: "faculty",
+    price: "16-28 元",
+    audience: "学校教职工和行政老师",
+    locationContext: "campus",
+    goal: "提升社群复购",
+    tone: "专业可信"
+  }
+};
 
 function value(id) {
-  return document.querySelector(`#${id}`).value.trim();
+  const node = document.querySelector(`#${id}`);
+  return node ? node.value.trim() : "";
+}
+
+function setValue(id, nextValue) {
+  const node = document.querySelector(`#${id}`);
+  if (!node) return;
+  node.value = nextValue;
 }
 
 function showToast(message) {
@@ -33,89 +131,107 @@ function showToast(message) {
 }
 
 function collectData() {
+  const audienceType = value("audienceType") || "student";
   return {
-    storeType: value("storeType"),
-    storeName: value("storeName") || "校园小店",
+    storeType: value("storeType") || "小店",
+    storeName: value("storeName") || "校边小店",
     product: value("product") || "主推产品",
-    price: value("price") || "学生价",
-    audience: value("audience") || "大学生",
-    goal: value("goal"),
-    tone: value("tone")
+    price: value("price") || "学生友好价",
+    audience: value("audience") || audienceProfiles[audienceType].label,
+    audienceType,
+    locationContext: value("locationContext") || "campus",
+    goal: value("goal") || "提高到店客流",
+    tone: value("tone") || "年轻有梗"
   };
 }
 
+function profileOf(data) {
+  return audienceProfiles[data.audienceType] || audienceProfiles.custom;
+}
+
+function rotate(items, index) {
+  return items[index % items.length];
+}
+
 function buildPosts(data) {
-  return postAngles.map((angle, index) => {
+  const profile = profileOf(data);
+  return Array.from({ length: 7 }, (_, index) => {
     const day = index + 1;
+    const rhythm = rotate(profile.rhythm, index);
+    const motive = rotate(profile.motivation, index);
     return {
-      title: `D${day}｜${angle}`,
-      body: `${data.storeName} 的 ${data.product}，客单价 ${data.price}，适合${data.audience}。语气保持${data.tone}，结尾引导收藏、到店或进群。`
+      title: `D${day}｜${rhythm}：${motive}的${data.storeType}选择`,
+      body: `${data.storeName} 主推 ${data.product}，客单价 ${data.price}，面向${data.audience}。这条内容强调“${rhythm} + ${motive}”，结尾引导用户执行：${profile.conversion}。`
     };
   });
 }
 
 function buildScripts(data) {
+  const profile = profileOf(data);
   return [
     {
-      title: "门店 15 秒快闪",
-      body: `镜头 1：拍门头和学生路过。镜头 2：特写制作 ${data.product}。镜头 3：展示价格 ${data.price}。结尾口播：下课路过就来一份。`
+      title: `${profile.label}的一天切片`,
+      body: `镜头 1：拍${profile.rhythm[0]}的人流。镜头 2：展示 ${data.product} 的制作/交付过程。镜头 3：强调 ${profile.motivation[0]} 和 ${data.price}。结尾引导：${profile.conversion}。`
     },
     {
-      title: "室友测评",
-      body: "三位同学分别说一个购买理由：近、划算、口味稳定。结尾给出本周暗号，鼓励宿舍拼单。"
+      title: "真实购买理由采访",
+      body: `找 2-3 位目标顾客说出购买理由，围绕“${profile.motivation.slice(0, 3).join("、")}”。不要像广告，要像真实路过后的选择。`
     },
     {
-      title: "老板的一天",
-      body: `拍备货、出单、打包、回复评论，强化真实感，最后带出本周目标：${data.goal}。`
+      title: "老板 30 秒承诺",
+      body: `老板出镜说明本周目标“${data.goal}”，承诺一件具体事：更快出餐、更稳品质、更清楚优惠或更好售后。`
     }
   ];
 }
 
 function buildCommunity(data) {
+  const profile = profileOf(data);
   return {
     messages: [
-      `今天下课后来店报暗号“校边参谋”，${data.product} 有隐藏福利。`,
-      "晚自习前 30 分钟适合囤一份，进群同学本周享优先提醒。",
-      "带室友一起到店更划算，适合宿舍拼单。",
-      "今天评论区抽 3 位同学送小福利，明天中午公布。",
-      `老顾客返场提醒：本周主推 ${data.product}，特殊需求可以提前说。`,
-      "社群内先发新品图，收集 5 个反馈后再正式发小红书。",
-      "中午高峰期建议提前 10 分钟预约，减少等待。",
-      "本周到店打卡可加入下周试吃/试用名单。",
-      "把订单截图发群里，可参与周五小福利。",
-      "周末活动提前预告：两人同行更划算。"
+      `今天${profile.rhythm[0]}来店/预订，报暗号“校边参谋”，${data.product} 有本周福利。`,
+      `${profile.label}专属提醒：如果赶时间，可以提前发消息，尽量帮你快取。`,
+      `适合${profile.rhythm[4]}，可以和熟人一起拼单，价格更划算。`,
+      `本周想验证一个小活动：${profile.conversion}，欢迎试一次。`,
+      `老顾客回访：这周主推 ${data.product}，有特殊需求可以提前说。`,
+      `今天收集 5 条真实反馈，明天根据反馈调整活动。`,
+      `高峰时段建议提前 10 分钟预约，减少等待。`,
+      `把到店/下单截图发群里，可参与周五小福利。`,
+      `如果你身边也有${profile.label}朋友，转发给他，本周一起享福利。`,
+      `本周复盘看三个数：咨询、到店、复购。老板会根据反馈调整。`
     ],
     replies: [
-      `好评：谢谢同学喜欢，下次可以试试 ${data.product}，最近有校园限定福利。`,
-      "差评：很抱歉这次体验没有达到预期，可以私信具体问题，我们会优先处理并补偿。",
-      `咨询：店在学校附近，适合下课后顺路来，当前客单价约 ${data.price}。`,
-      "催促：高峰期可能要等几分钟，建议提前进群预约。",
-      "复购：老朋友本周回来可以报暗号“再来一次”。"
+      `好评：谢谢认可，下次${profile.rhythm[1]}可以试试 ${data.product}，本周有专属福利。`,
+      "差评：抱歉这次体验没有达到预期，可以私信具体问题，我们会优先处理并给出补偿方案。",
+      `咨询：我们在${locationProfiles[data.locationContext]}附近，适合${data.audience}，客单价约 ${data.price}。`,
+      "催促：高峰期可能需要等待，建议提前预约，我们会尽量缩短取餐/取货时间。",
+      `复购：老朋友本周回来可以报暗号，适合${profile.conversion}。`
     ]
   };
 }
 
 function buildValidation(data) {
+  const profile = profileOf(data);
   return [
-    ["D1-D2", "访谈 8-10 家校园周边商家，记录发布频率、运营负责人、最大困难和预算。"],
-    ["D3-D4", `选择 3 家${data.storeType}或相近门店试用，确认愿意实际发布内容。`],
-    ["D5-D6", "生成第一版内容包、短视频脚本、社群话术和活动海报文案。"],
-    ["D7-D9", "协助商家发布到小红书、朋友圈或微信群，并记录发布时间。"],
-    ["D10-D11", "收集浏览量、咨询量、到店反馈、进群人数和老板主观评价。"],
-    ["D12-D13", "优化 Prompt 和交付模板，形成可复制的每周服务流程。"],
-    ["D14", "测试 99/299 元付费意愿，决定是否继续推进产品化。"]
+    ["D1-D2", `访谈 8-10 家${locationProfiles[data.locationContext]}商家，确认他们是否服务${profile.label}，记录运营痛点和预算。`],
+    ["D3-D4", `选择 3 家愿意试用的店，采集门头、菜单、评论区、社群话术和高峰时段。`],
+    ["D5-D6", `生成第一版增长包：体检分、内容日历、短视频脚本、${profile.label}转化话术。`],
+    ["D7-D9", `让商家在${profile.channel}发布，记录内容采用率和发布时间。`],
+    ["D10-D11", `围绕${profile.metric}收集数据，判断内容是否真的带来线索。`],
+    ["D12-D13", "优化客群画像、Prompt、定价和交付格式，沉淀一个可复制样板案例。"],
+    ["D14", "测试 99/299 元付费意愿，决定继续产品化还是转为轻服务。"]
   ];
 }
 
 function computeScores(data) {
-  const productComplexity = Math.min(10, Math.floor(data.product.length / 8));
-  const toneBonus = data.tone === "高性价比" ? 4 : data.tone === "年轻有梗" ? 6 : 3;
-  const scene = 76 + toneBonus;
-  const conversion = 64 + productComplexity;
-  const community = data.goal === "提升社群复购" ? 84 : 72;
-  const reply = data.goal === "处理差评" ? 86 : 80;
+  const profile = profileOf(data);
+  const productFit = Math.min(14, Math.floor(data.product.length / 5));
+  const contextFit = data.locationContext === "campus" && data.audienceType === "student" ? 8 : 4;
+  const scene = 70 + contextFit + productFit;
+  const conversion = data.goal === "提高到店客流" ? 78 : 70;
+  const community = data.goal === "提升社群复购" ? 86 : 72;
+  const reply = data.goal === "处理差评" ? 88 : 78;
   const health = Math.round((scene + conversion + community + reply) / 4);
-  return { scene, conversion, community, reply, health };
+  return { scene, conversion, community, reply, health, sceneLabel: profile.sceneLabel };
 }
 
 function updateScores(data) {
@@ -125,50 +241,53 @@ function updateScores(data) {
   document.querySelector("#conversionScore").textContent = scores.conversion;
   document.querySelector("#communityScore").textContent = scores.community;
   document.querySelector("#replyScore").textContent = scores.reply;
+  document.querySelector("#sceneScore").nextElementSibling.textContent = scores.sceneLabel;
 }
 
 function renderDiagnosis(data) {
+  const profile = profileOf(data);
   const scores = computeScores(data);
   output.innerHTML = `
     <article class="content-card wide">
       <h3>AI 店铺诊断结论</h3>
-      <p>${data.storeName} 当前最值得验证的是“${data.goal}”。AI 判断该店学生场景感较强，但到店转化链路仍可加强，需要把内容发布、暗号福利、微信群沉淀和评论回复连成闭环。</p>
+      <p>${data.storeName} 当前最值得验证的是“${data.goal}”。系统识别主要客群为“${profile.label}”，高频时段是“${profile.rhythm.slice(0, 3).join("、")}”。增长重点不是多发内容，而是把“${profile.motivation.slice(0, 3).join("、")}”转成可追踪的到店动作。</p>
     </article>
     <article class="content-card">
       <h3>优势</h3>
       <ul>
-        <li>产品适合绑定“下课/晚自习/宿舍拼单”等校园场景。</li>
-        <li>客单价 ${data.price}，学生决策门槛较低。</li>
-        <li>${data.tone} 风格适合做小红书和朋友圈轻内容。</li>
+        <li>客群画像清晰：${data.audience}。</li>
+        <li>购买动机可被内容表达：${profile.motivation.join("、")}。</li>
+        <li>适合渠道：${profile.channel}。</li>
       </ul>
     </article>
     <article class="content-card">
       <h3>短板</h3>
       <ul>
-        <li>如果只发图文，难以把浏览转成到店。</li>
-        <li>缺少老客召回和微信群复购机制。</li>
-        <li>评论区需要从“礼貌回复”升级成“二次转化”。</li>
+        <li>如果只发泛文案，无法证明内容带来真实到店。</li>
+        <li>需要把每条内容绑定一个可记录动作：暗号、预约、拼单或进群。</li>
+        <li>需要按客群节奏发布，而不是按老板空闲时间发布。</li>
       </ul>
     </article>
     <article class="content-card wide">
       <h3>本周增长实验</h3>
       <div class="message-grid">
-        <div class="message-item">实验 A：小红书标题强调“下课 10 分钟”。指标：收藏/评论。</div>
-        <div class="message-item">实验 B：微信群暗号福利。指标：进群人数/到店暗号次数。</div>
-        <div class="message-item">实验 C：短视频拍门店真实制作过程。指标：完播和私信。</div>
-        <div class="message-item">实验 D：差评回复加入补偿路径。指标：用户二次沟通率。</div>
+        <div class="message-item">实验 A：围绕“${profile.rhythm[0]}”发内容。指标：${profile.metric}。</div>
+        <div class="message-item">实验 B：强调“${profile.motivation[0]}”。指标：咨询转化率。</div>
+        <div class="message-item">实验 C：设置“${profile.conversion}”。指标：可追踪动作次数。</div>
+        <div class="message-item">实验 D：评论回复加入补偿/预约路径。指标：二次沟通率。</div>
       </div>
     </article>
   `;
-  latestText = `增长健康分 ${scores.health}\n优势：学生场景强、客单价低、适合轻内容。\n短板：转化链路和社群复购需要加强。\n本周实验：小红书标题、微信群暗号、短视频制作过程、评论二次转化。`;
+  latestText = `增长健康分 ${scores.health}\n客群：${profile.label}\n节奏：${profile.rhythm.join("、")}\n动机：${profile.motivation.join("、")}\n转化动作：${profile.conversion}\n验证指标：${profile.metric}`;
 }
 
 function renderPosts(data) {
   const posts = buildPosts(data);
+  const profile = profileOf(data);
   output.innerHTML = `
     <article class="content-card wide">
       <h3>本周内容主线</h3>
-      <p>${data.storeName} 是面向${data.audience}的${data.storeType}。本周内容围绕“${data.goal}”，把 ${data.product} 包装成校园生活里的高频小选择。</p>
+      <p>${data.storeName} 是面向${data.audience}的${data.storeType}。本周内容围绕“${data.goal}”，按${profile.label}的生活节奏发布，而不是写死成学生场景。</p>
     </article>
     ${posts.map(item => `
       <article class="content-card">
@@ -185,7 +304,7 @@ function renderScripts(data) {
   output.innerHTML = `
     <article class="content-card wide">
       <h3>短视频生产原则</h3>
-      <p>每条控制在 15-30 秒，重点展示真实门店、真实价格、真实学生场景，避免空泛广告感。</p>
+      <p>每条 15-30 秒，只拍真实门店、真实价格、真实客群节奏；每条视频都要绑定一个可记录动作。</p>
     </article>
     <article class="content-card wide">
       <h3>脚本清单</h3>
@@ -204,7 +323,7 @@ function renderCommunity(data) {
   const community = buildCommunity(data);
   output.innerHTML = `
     <article class="content-card wide">
-      <h3>微信群促销话术</h3>
+      <h3>社群促销话术</h3>
       <div class="message-grid">
         ${community.messages.map(item => `<div class="message-item">${item}</div>`).join("")}
       </div>
@@ -219,6 +338,7 @@ function renderCommunity(data) {
 
 function renderValidation(data) {
   const timeline = buildValidation(data);
+  const profile = profileOf(data);
   output.innerHTML = `
     <article class="content-card wide">
       <h3>两周验证计划</h3>
@@ -236,23 +356,25 @@ function renderValidation(data) {
       <ul>
         <li>访谈 8-10 家店</li>
         <li>找到 3 家试用门店</li>
-        <li>至少 30% 内容被商家采用</li>
+        <li>至少 30% 内容被采用</li>
         <li>至少 1 家愿意付费</li>
+        <li>关键业务指标：${profile.metric}</li>
       </ul>
     </article>
     <article class="content-card">
       <h3>最大风险</h3>
-      <p>商家可能只接受免费内容，不愿长期付费。需要通过发布后的浏览、咨询、到店和复购数据证明价值。</p>
+      <p>商家可能只接受免费内容，不愿持续付费。解决方式是把内容绑定到可记录动作，证明 AI 不是写稿，而是在做增长实验。</p>
     </article>
   `;
   latestText = timeline.map(([day, task]) => `${day}：${task}`).join("\n");
 }
 
 function renderEvidence(data) {
+  const profile = profileOf(data);
   const items = [
-    `${data.storeType}常见问题：内容更新不稳定，标题和活动表达同质化。`,
-    "平台评论区常见模板化回复，缺少安抚、复购和二次转化。",
-    "访谈要验证：谁负责运营、每周发几次、是否愿意为内容包付费。",
+    `${profile.label}不是抽象用户，有明确节奏：${profile.rhythm.slice(0, 3).join("、")}。`,
+    `商家要验证的不是文案好不好看，而是${profile.metric}是否提升。`,
+    `访谈要问：谁负责运营、每周发几次、是否有${profile.conversion}。`,
     "关键付费问题：99 元试用包或 299 元月包是否能被接受。"
   ];
   evidenceList.innerHTML = items.map(item => `<li>${item}</li>`).join("");
@@ -260,9 +382,10 @@ function renderEvidence(data) {
 
 function render() {
   const data = collectData();
+  const profile = profileOf(data);
   currentData = data;
-  outputTitle.textContent = `${data.storeName} · 7 天 AI 经营内容包`;
-  strategyText.textContent = `${data.storeName} 的本周目标是“${data.goal}”。策略是把 ${data.product} 绑定到${data.audience}的真实场景，用内容、短视频、社群和评论回复形成一套轻量经营闭环。`;
+  outputTitle.textContent = `${data.storeName} · ${profile.label}增长包`;
+  strategyText.textContent = `${data.storeName} 的本周目标是“${data.goal}”。策略是围绕${profile.label}的“${profile.rhythm.slice(0, 3).join("、")}”节奏，把 ${data.product} 变成可追踪的动作：${profile.conversion}。`;
   renderEvidence(data);
   updateScores(data);
 
@@ -282,10 +405,25 @@ tabs.forEach(tab => {
   });
 });
 
+function applyPreset(name, silent = false) {
+  const preset = presets[name];
+  if (!preset) return false;
+  Object.entries(preset).forEach(([key, nextValue]) => setValue(key, nextValue));
+  render();
+  if (!silent) showToast(`已切换为${audienceProfiles[preset.audienceType].label}场景`);
+  return true;
+}
+
+presetButtons.forEach(button => {
+  button.addEventListener("click", () => {
+    applyPreset(button.dataset.preset);
+  });
+});
+
 form.addEventListener("submit", event => {
   event.preventDefault();
   render();
-  showToast("已生成新的内容包");
+  showToast("已生成新的增长包");
 });
 
 copyBtn.addEventListener("click", async () => {
@@ -294,13 +432,16 @@ copyBtn.addEventListener("click", async () => {
 });
 
 downloadBtn.addEventListener("click", () => {
-  const blob = new Blob([`${currentData.storeName} 7 天 AI 经营内容包\n\n${latestText}`], { type: "text/plain;charset=utf-8" });
+  const blob = new Blob([`${currentData.storeName} 增长包\n\n${latestText}`], { type: "text/plain;charset=utf-8" });
   const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = `${currentData.storeName}-内容包.txt`;
+  link.download = `${currentData.storeName}-增长包.txt`;
   link.click();
   URL.revokeObjectURL(link.href);
   showToast("TXT 已导出");
 });
 
-render();
+const initialPreset = new URLSearchParams(window.location.search).get("preset");
+if (!applyPreset(initialPreset, true)) {
+  render();
+}

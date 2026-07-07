@@ -18,10 +18,17 @@
       </div>
 
       <form id="merchantForm" class="merchant-form">
+        <div class="preset-row" aria-label="场景样例">
+          <button type="button" data-preset="student">学生奶茶</button>
+          <button type="button" data-preset="worker">工人快餐</button>
+          <button type="button" data-preset="faculty">教职工咖啡</button>
+        </div>
+
         <label>
           店铺类型
           <select id="storeType">
             <option>奶茶店</option>
+            <option>快餐店</option>
             <option>咖啡店</option>
             <option>小吃店</option>
             <option>美甲店</option>
@@ -42,12 +49,35 @@
 
         <div class="form-grid">
           <label>
+            主要客群
+            <select id="audienceType">
+              <option value="student">学生</option>
+              <option value="worker">周边工人</option>
+              <option value="faculty">教职工</option>
+              <option value="resident">社区居民</option>
+              <option value="office">上班族</option>
+              <option value="custom">自定义</option>
+            </select>
+          </label>
+          <label>
             客单价
             <input id="price" value="12-18 元" />
           </label>
+        </div>
+
+        <div class="form-grid">
           <label>
-            目标用户
+            顾客描述
             <input id="audience" value="下课后的大学生" />
+          </label>
+          <label>
+            经营半径
+            <select id="locationContext">
+              <option value="campus">学校门口/校内生活圈</option>
+              <option value="construction">工地/产业园旁</option>
+              <option value="office">写字楼/办公区旁</option>
+              <option value="community">社区/居民区旁</option>
+            </select>
           </label>
         </div>
 

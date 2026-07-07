@@ -96,6 +96,26 @@ h1 {
   gap: 15px;
 }
 
+.preset-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.preset-row button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.preset-row button:hover {
+  background: var(--mint);
+  border-color: var(--green);
+}
+
 label {
   display: grid;
   gap: 7px;
@@ -482,6 +502,10 @@ h2 {
   }
 
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preset-row {
     grid-template-columns: 1fr;
   }
 

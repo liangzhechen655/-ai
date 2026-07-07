@@ -7,17 +7,17 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="app">
-    <aside class="panel input-panel">
+  <main class="app-shell">
+    <aside class="sidebar">
       <div class="brand">
-        <span class="mark">AI</span>
+        <div class="brand-mark">AI</div>
         <div>
           <h1>校边 AI 小店参谋</h1>
-          <p>输入店铺信息，生成一周可发布的经营内容包。</p>
+          <p>给学校周边商家生成一周可执行的内容、活动和社群方案。</p>
         </div>
       </div>
 
-      <form id="merchantForm">
+      <form id="merchantForm" class="merchant-form">
         <label>
           店铺类型
           <select id="storeType">
@@ -37,10 +37,10 @@
 
         <label>
           主推产品/服务
-          <input id="product" value="手打柠檬茶、鸭屎香柠檬茶、第二杯半价" />
+          <textarea id="product" rows="3">手打柠檬茶、鸭屎香柠檬茶、第二杯半价</textarea>
         </label>
 
-        <div class="row">
+        <div class="form-grid">
           <label>
             客单价
             <input id="price" value="12-18 元" />
@@ -71,23 +71,71 @@
           </select>
         </label>
 
-        <button type="submit">生成 7 天内容包</button>
+        <button class="primary-btn" type="submit">生成内容包</button>
       </form>
     </aside>
 
     <section class="workspace">
-      <div class="toolbar">
+      <header class="topbar">
         <div>
-          <p class="eyebrow">MVP Demo</p>
+          <p class="eyebrow">MVP Prototype</p>
           <h2 id="outputTitle">南门柠檬茶 · 7 天 AI 经营内容包</h2>
         </div>
-        <button id="copyBtn" type="button">复制内容</button>
-      </div>
+        <div class="actions">
+          <button id="copyBtn" type="button" class="ghost-btn">复制</button>
+          <button id="downloadBtn" type="button" class="ghost-btn">导出 TXT</button>
+        </div>
+      </header>
 
-      <div id="output" class="output"></div>
+      <section class="summary-band">
+        <div>
+          <p class="eyebrow">本周策略</p>
+          <p id="strategyText" class="strategy-text"></p>
+        </div>
+        <div class="kpi-strip">
+          <div><strong>7</strong><span>图文</span></div>
+          <div><strong>3</strong><span>脚本</span></div>
+          <div><strong>10</strong><span>社群话术</span></div>
+          <div><strong>99</strong><span>元试用</span></div>
+        </div>
+      </section>
+
+      <nav class="tabs" aria-label="内容类型">
+        <button class="tab active" data-tab="posts" type="button">图文内容</button>
+        <button class="tab" data-tab="scripts" type="button">短视频脚本</button>
+        <button class="tab" data-tab="community" type="button">社群评论</button>
+        <button class="tab" data-tab="validation" type="button">验证计划</button>
+      </nav>
+
+      <div class="content-layout">
+        <section id="output" class="output"></section>
+
+        <aside class="right-rail">
+          <section class="rail-section">
+            <h3>用户证据</h3>
+            <ul id="evidenceList"></ul>
+          </section>
+
+          <section class="rail-section">
+            <h3>商业化</h3>
+            <div class="price-list">
+              <div><strong>免费</strong><span>3 条内容试用</span></div>
+              <div><strong>99/周</strong><span>1 周内容包</span></div>
+              <div><strong>299/月</strong><span>每周内容 + 活动建议</span></div>
+              <div><strong>699/月</strong><span>评论、社群和复盘轻服务</span></div>
+            </div>
+          </section>
+
+          <section class="rail-section">
+            <h3>通过标准</h3>
+            <p>两周内找到 3 家试用商家，至少 1 家愿意为 99/299 元套餐付费。</p>
+          </section>
+        </aside>
+      </div>
     </section>
   </main>
 
+  <div id="toast" class="toast" aria-live="polite"></div>
   <script src="app.js"></script>
 </body>
 </html>

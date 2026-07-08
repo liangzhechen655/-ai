@@ -3,29 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>校边 AI 小店参谋 - 1 页机会验证</title>
+  <title>校边 AI 小店参谋 - 机会验证</title>
   <style>
-    @page { size: A4; margin: 8mm; }
+    @page { size: A4; margin: 0; }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      background: #eceff3;
-      color: #142033;
+      background: #eef1f5;
+      color: #162235;
       font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
       line-height: 1.36;
     }
     .page {
       width: 210mm;
-      min-height: 297mm;
+      height: 297mm;
       margin: 0 auto;
-      padding: 10mm;
+      padding: 11mm 12mm 9mm;
       background: #fbfbf7;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 4mm;
     }
     header {
       display: grid;
       grid-template-columns: 1.15fr 0.85fr;
       gap: 8mm;
-      padding-bottom: 5mm;
+      align-items: end;
+      padding-bottom: 4mm;
       border-bottom: 1.2pt solid #17324f;
     }
     h1 {
@@ -36,237 +41,180 @@
       letter-spacing: 0;
     }
     .subtitle {
-      margin: 3mm 0 0;
-      color: #44556b;
+      margin: 2.5mm 0 0;
+      color: #4a5b70;
       font-size: 9.2pt;
     }
-    .north-star {
+    .stat-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 2mm;
-      align-self: end;
     }
-    .metric {
+    .stat {
       background: #17324f;
       color: #fff;
       padding: 3mm;
-      min-height: 20mm;
+      min-height: 19mm;
     }
-    .metric strong { display: block; font-size: 15pt; line-height: 1; margin-bottom: 1.5mm; }
-    .metric span { font-size: 7.2pt; color: rgba(255,255,255,.82); }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3.5mm;
-      margin-top: 4mm;
-    }
-    section {
-      border: 0.8pt solid #d3d8df;
-      background: #fff;
-      padding: 3.4mm;
-    }
-    section.wide { grid-column: 1 / -1; }
+    .stat strong { display: block; font-size: 16pt; line-height: 1; margin-bottom: 1.4mm; }
+    .stat span { font-size: 7.1pt; color: rgba(255,255,255,.82); }
     h2 {
-      margin: 0 0 2.2mm;
+      margin: 0 0 2mm;
       color: #17324f;
-      font-size: 11.5pt;
+      font-size: 11pt;
       line-height: 1.15;
     }
-    p { margin: 0 0 1.4mm; font-size: 7.9pt; }
-    ul { margin: 0; padding-left: 4mm; }
-    li { margin: 0 0 0.9mm; font-size: 7.65pt; }
+    p { margin: 0 0 1.2mm; font-size: 7.65pt; }
+    ul, ol { margin: 0; padding-left: 4mm; }
+    li { margin: 0 0 .7mm; font-size: 7.25pt; }
     .label { color: #17324f; font-weight: 800; }
-    .evidence-row, .pricing-row, .mvp-row, .timeline {
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 0.82fr;
+      gap: 3mm;
+    }
+    .card {
+      border: 0.8pt solid #d4dae2;
+      background: #fff;
+      padding: 3mm;
+    }
+    .evidence-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5mm;
+    }
+    .evidence {
+      background: #f3f6f5;
+      border-left: 3pt solid #2f6f5e;
+      padding: 1.8mm;
+      min-height: 19mm;
+      font-size: 6.75pt;
+    }
+    .evidence strong {
+      display: block;
+      color: #17324f;
+      font-size: 7.9pt;
+      margin-bottom: .8mm;
+    }
+    .mvp-section {
+      border: 1pt solid #17324f;
+      background: #fff;
+      padding: 3mm;
+      display: grid;
+      grid-template-columns: 1.32fr 0.68fr;
+      gap: 3mm;
+      min-height: 120mm;
+    }
+    .prototype-shot {
+      border: 0.8pt solid #cbd5df;
+      background: #eef3f6;
+      padding: 1.8mm;
+      height: 83mm;
+      overflow: hidden;
+    }
+    .prototype-shot img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top left;
+    }
+    .caption {
+      margin-top: 1.6mm;
+      color: #526174;
+      font-size: 6.8pt;
+    }
+    .mvp-side {
       display: grid;
       gap: 2mm;
     }
-    .evidence-row { grid-template-columns: repeat(3, 1fr); }
-    .pricing-row { grid-template-columns: repeat(4, 1fr); }
-    .mvp-row { grid-template-columns: 0.9fr 1.1fr 1fr; }
-    .evidence, .price, .screen {
-      background: #f4f7f6;
-      border-left: 3pt solid #2f6f5e;
+    .mini-block {
+      background: #f7f9f8;
+      border: 0.8pt solid #d4dae2;
       padding: 2.2mm;
-      min-height: 20mm;
-      font-size: 7.25pt;
     }
-    .evidence strong, .price strong, .screen strong {
-      display: block;
-      color: #17324f;
-      font-size: 8.8pt;
-      margin-bottom: 1mm;
-    }
-    .screen {
+    .mini-block.dark {
       background: #17324f;
       color: #fff;
-      border-left: 0;
+      border-color: #17324f;
     }
-    .screen strong { color: #fff; }
-    .screen span { color: rgba(255,255,255,.82); }
-    .flow {
+    .mini-block.dark h3, .mini-block.dark p { color: #fff; }
+    h3 {
+      margin: 0 0 1.3mm;
+      color: #17324f;
+      font-size: 8.8pt;
+      line-height: 1.15;
+    }
+    .mini-block p, .mini-block li { font-size: 6.85pt; }
+    .prompt-flow {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 1.6mm;
+      gap: 1.5mm;
       margin-top: 2mm;
     }
     .step {
+      background: #e8f3ef;
+      border: 0.8pt solid #bdd0c8;
+      color: #17324f;
+      padding: 1.8mm 1.2mm;
+      min-height: 14mm;
       display: grid;
       place-items: center;
       text-align: center;
-      min-height: 14mm;
-      padding: 1.5mm;
-      border: 0.8pt solid #bdd0c8;
-      background: #e8f3ef;
-      color: #17324f;
-      font-size: 7.1pt;
+      font-size: 6.7pt;
       font-weight: 800;
     }
-    .prototype-mock {
+    .bottom-grid {
       display: grid;
-      grid-template-columns: 0.72fr 1.55fr 0.85fr;
-      gap: 2mm;
-      margin-top: 2mm;
-      border: 0.8pt solid #cbd5df;
-      background: #eef3f6;
-      padding: 2.4mm;
-      min-height: 52mm;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 3mm;
     }
-    .mock-panel {
-      background: #fff;
-      border: 0.7pt solid #d3d8df;
-      padding: 2mm;
-    }
-    .mock-title {
-      color: #17324f;
-      font-size: 7.2pt;
-      font-weight: 800;
-      margin-bottom: 1.5mm;
-    }
-    .mock-field {
-      height: 5.2mm;
-      margin-bottom: 1.4mm;
-      background: #f4f7f6;
-      border: 0.6pt solid #d8e2e8;
-    }
-    .mock-chip-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1mm;
-      margin-bottom: 1.8mm;
-    }
-    .mock-chip {
-      height: 5.2mm;
-      display: grid;
-      place-items: center;
-      background: #e8f3ef;
-      color: #17324f;
-      font-size: 6pt;
-      font-weight: 800;
-    }
-    .mock-chip.active {
-      background: #2f6f5e;
-      color: #fff;
-    }
-    .mock-score {
-      display: grid;
-      grid-template-columns: 18mm 1fr;
-      gap: 2mm;
-      margin-bottom: 2mm;
-    }
-    .mock-ring {
-      width: 18mm;
-      height: 18mm;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      color: #17324f;
-      font-size: 10pt;
-      font-weight: 900;
-      background:
-        radial-gradient(circle at center, #fff 0 53%, transparent 54%),
-        conic-gradient(#2f6f5e 77%, #dfe5eb 0);
-    }
-    .mock-headline {
-      background: #f4f7f6;
-      padding: 1.8mm;
-      color: #17324f;
-      font-size: 7pt;
-      font-weight: 800;
-    }
-    .mock-metrics {
+    .price-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1mm;
-      margin-bottom: 2mm;
+      gap: 1.5mm;
+      margin-top: 1.6mm;
     }
-    .mock-metrics div {
-      background: #e8f3ef;
-      border-left: 2pt solid #2f6f5e;
-      padding: 1.3mm;
-      min-height: 10mm;
+    .price {
+      background: #f3f6f5;
+      border-left: 3pt solid #2f6f5e;
+      padding: 1.8mm;
+      min-height: 17mm;
+      font-size: 6.8pt;
+    }
+    .price strong {
+      display: block;
       color: #17324f;
-      font-size: 6pt;
-      font-weight: 800;
-    }
-    .mock-result {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.3mm;
-    }
-    .mock-result div {
-      min-height: 12mm;
-      background: #fff;
-      border: 0.6pt solid #d3d8df;
-      padding: 1.5mm;
-      font-size: 6.2pt;
-      color: #142033;
-    }
-    .mock-side-card {
-      background: #17324f;
-      color: #fff;
-      padding: 2mm;
-      font-size: 6.4pt;
-      margin-bottom: 1.5mm;
-      min-height: 18mm;
-    }
-    .mock-kpi {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1mm;
-    }
-    .mock-kpi div {
-      background: #fff8df;
-      border-left: 2pt solid #f0cc68;
-      padding: 1.5mm;
-      font-size: 6pt;
-      color: #17324f;
-      font-weight: 800;
+      font-size: 8.7pt;
+      margin-bottom: .6mm;
     }
     .timeline {
+      display: grid;
       grid-template-columns: repeat(7, 1fr);
+      gap: 1.2mm;
+      margin-top: 1mm;
     }
     .day {
       background: #f6f6f1;
-      border-left: 2.2pt solid #17324f;
-      padding: 1.6mm;
-      min-height: 19mm;
-      font-size: 6.55pt;
+      border-left: 2.1pt solid #17324f;
+      padding: 1.4mm;
+      min-height: 20mm;
+      font-size: 6.2pt;
     }
     .day strong {
       display: block;
       color: #17324f;
-      font-size: 7.3pt;
-      margin-bottom: .7mm;
+      font-size: 7pt;
+      margin-bottom: .5mm;
     }
-    .footer {
-      margin-top: 3mm;
-      padding-top: 2mm;
-      border-top: 0.8pt solid #d3d8df;
+    footer {
       display: grid;
-      grid-template-columns: 1.2fr 1fr;
+      grid-template-columns: 1fr 1fr;
       gap: 4mm;
-      color: #59677a;
-      font-size: 6.8pt;
+      padding-top: 2mm;
+      border-top: 0.8pt solid #d4dae2;
+      color: #5a687b;
+      font-size: 6.6pt;
     }
     @media print {
       body { background: #fff; }
@@ -279,116 +227,108 @@
     <header>
       <div>
         <h1>校边 AI 小店参谋</h1>
-        <p class="subtitle">小微 AI 方向。给学校周边小店做“客群识别 - 增长诊断 - 内容生成 - 发布复盘”的轻量 AI 工作台，先验证店主是否愿意为可执行增长包付费。</p>
+        <p class="subtitle">小微 AI 方向。给学校周边小店做“客群识别 - 增长诊断 - 内容生成 - 发布复盘”的轻量 AI 工作台，验证店主是否愿意为可执行增长包付费。</p>
       </div>
-      <div class="north-star">
-        <div class="metric"><strong>3</strong><span>试用门店</span></div>
-        <div class="metric"><strong>30%</strong><span>内容采用率</span></div>
-        <div class="metric"><strong>1+</strong><span>付费意愿</span></div>
+      <div class="stat-strip">
+        <div class="stat"><strong>3</strong><span>试用门店</span></div>
+        <div class="stat"><strong>30%</strong><span>内容采用率</span></div>
+        <div class="stat"><strong>1+</strong><span>付费意愿</span></div>
       </div>
     </header>
 
-    <div class="grid">
-      <section>
+    <section class="top-grid">
+      <div class="card">
         <h2>1. 机会判断</h2>
-        <p><span class="label">目标用户：</span>学校周边 1-5 人经营的小店：奶茶、咖啡、快餐、小吃、美甲、打印、桌游等。</p>
-        <p><span class="label">核心痛点：</span>老板知道要做小红书/抖音/微信群，但不会稳定产出内容，也不知道如何把浏览转成到店、进群和复购。</p>
-        <p><span class="label">现在为什么做：</span>AI 已能低成本完成内容、接待、视觉和经营分析；小店需要的是可复制执行的增长包，而不是学习复杂工具。</p>
-      </section>
-
-      <section>
+        <p><span class="label">目标用户：</span>学校周边 1-5 人小店：奶茶、咖啡、快餐、小吃、美甲、打印、桌游。</p>
+        <p><span class="label">痛点：</span>会开店但不会稳定做内容；不知道如何把浏览转成到店、进群和复购；请代运营太贵。</p>
+        <p><span class="label">为什么现在：</span>AI 已能低成本完成内容、视觉、接待和经营分析，小店需要可复制执行的增长包。</p>
+      </div>
+      <div class="card">
         <h2>2. 用户证据</h2>
         <div class="evidence-row">
-          <div class="evidence"><strong>经营压力</strong>北大小微调查显示，小微经营面临需求不足、利润承压，线上经营是重要抓手。</div>
-          <div class="evidence"><strong>AI 进店</strong>美团披露 AI 视觉设计师帮助 44.8 万商家，AI 接待员接听 59.5 万通深夜咨询。</div>
-          <div class="evidence"><strong>私域刚需</strong>艾瑞 2025 私域报告显示，商家重视降低获客成本和促进转化。</div>
+          <div class="evidence"><strong>经营压力</strong>北大小微调查：需求不足、利润承压，线上经营是重要抓手。</div>
+          <div class="evidence"><strong>AI 进店</strong>美团 AI 视觉设计师服务 44.8 万商家，AI 接待员处理深夜咨询。</div>
+          <div class="evidence"><strong>私域刚需</strong>艾瑞 2025：商家重视降低获客成本和促进转化。</div>
         </div>
-      </section>
+      </div>
+      <div class="card">
+        <h2>验证假设</h2>
+        <ul>
+          <li>老板能在 3 分钟理解原型。</li>
+          <li>至少 30% 内容被实际采用。</li>
+          <li>至少 1 家愿意付 99/299 元继续用。</li>
+        </ul>
+      </div>
+    </section>
 
-      <section class="wide">
-        <h2>3. MVP 样例：可交互 Demo 页面</h2>
-        <p><span class="label">MVP 不是完整 SaaS：</span>只做一个可点击页面，验证老板能否在 3 分钟内理解“客群诊断 + 一周增长包”，并愿意发布/付费。下方缩略图对应真实原型页面布局。</p>
-        <div class="prototype-mock">
-          <div class="mock-panel">
-            <div class="mock-title">01 店铺输入</div>
-            <div class="mock-field"></div>
-            <div class="mock-field"></div>
-            <div class="mock-field" style="height:12mm;"></div>
-            <div class="mock-field"></div>
-            <div class="mock-field"></div>
-          </div>
-          <div class="mock-panel">
-            <div class="mock-chip-row">
-              <div class="mock-chip active">学生奶茶</div>
-              <div class="mock-chip">工人快餐</div>
-              <div class="mock-chip">教职工咖啡</div>
-            </div>
-            <div class="mock-score">
-              <div class="mock-ring">77</div>
-              <div class="mock-headline">学生 · 下课后/午饭前后/晚自习前<br>生成诊断结论和本周增长实验</div>
-            </div>
-            <div class="mock-metrics">
-              <div>场景感<br>81</div>
-              <div>转化链路<br>78</div>
-              <div>复购设计<br>72</div>
-              <div>评论响应<br>78</div>
-            </div>
-            <div class="mock-result">
-              <div><strong>诊断结论</strong><br>客群节奏、购买动机、短板。</div>
-              <div><strong>增长包</strong><br>7 天图文、视频脚本、社群话术。</div>
-            </div>
-          </div>
-          <div class="mock-panel">
-            <div class="mock-title">03 验证看板</div>
-            <div class="mock-side-card">本周实验：下课后暗号福利<br>追踪收藏、到店暗号、进群人数。</div>
-            <div class="mock-kpi">
-              <div>30%<br>采用率</div>
-              <div>99<br>付费测试</div>
-            </div>
-          </div>
+    <section class="mvp-section">
+      <div>
+        <h2>3. MVP 样例：真实 Demo 页面原型图</h2>
+        <div class="prototype-shot">
+          <img src="preview/prototype-a4.png" alt="校边 AI 小店参谋 Demo 页面截图" />
         </div>
-      </section>
+        <p class="caption">原型页面：左侧店铺输入，中间客群切换 + AI 诊断仪表 + 增长包，右侧验证看板；支持学生奶茶、工人快餐、教职工咖啡 3 个场景。</p>
+        <div class="prompt-flow">
+          <div class="step">店铺信息</div>
+          <div class="step">客群画像</div>
+          <div class="step">AI 诊断</div>
+          <div class="step">生成增长包</div>
+          <div class="step">回填指标</div>
+        </div>
+      </div>
 
-      <section>
+      <div class="mvp-side">
+        <div class="mini-block dark">
+          <h3>Demo 页面交互</h3>
+          <p>选择“学生奶茶/工人快餐/教职工咖啡”后，页面自动生成客群节奏、购买动机、增长健康分、图文/视频/社群话术，并可复制/导出。</p>
+        </div>
+        <div class="mini-block">
+          <h3>内容样片</h3>
+          <p><span class="label">工人快餐：</span>“午休 20 分钟来店报暗号，15-22 元大份盖浇饭，支持工友拼单和电话预订。”</p>
+          <p><span class="label">学生奶茶：</span>“下课后报暗号，第二杯半价，引导宿舍拼单和进群领下周福利。”</p>
+        </div>
+        <div class="mini-block">
+          <h3>Prompt 流程</h3>
+          <ol>
+            <li>识别客群：学生/工人/教职工/居民。</li>
+            <li>抽取节奏：下课、午休、下班、接娃。</li>
+            <li>生成动作：暗号、拼单、预约、进群。</li>
+            <li>输出内容：图文、视频脚本、评论回复。</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="bottom-grid">
+      <div class="card">
         <h2>4. 商业判断</h2>
         <p><span class="label">谁付费：</span>店主、店长或负责线上运营的兼职同学。</p>
-        <p><span class="label">为何付费：</span>省时间、补运营能力、降低请代运营成本，并把平台浏览沉淀成微信群/老客复购。</p>
-        <div class="pricing-row">
+        <p><span class="label">为什么：</span>省时间、补运营能力、降低请代运营成本，并把平台浏览沉淀成微信群/老客复购。</p>
+        <div class="price-grid">
           <div class="price"><strong>免费</strong>1 次体检 + 3 条内容</div>
           <div class="price"><strong>99/周</strong>1 周增长包 + 复盘表</div>
           <div class="price"><strong>299/月</strong>每周内容包 + 活动建议</div>
           <div class="price"><strong>699/月</strong>评论/社群/复盘轻托管</div>
         </div>
-      </section>
-
-      <section>
-        <h2>5. 资源与判定</h2>
-        <ul>
-          <li><span class="label">投入：</span>1 人、原型页、Prompt、访谈表、数据记录表、3 家试用店。</li>
-          <li><span class="label">成功：</span>3 家试用中至少 1 家愿意付费，且实际采用内容超过 30%。</li>
-          <li><span class="label">失败：</span>老板只要免费内容、不愿发布，或发布后没有咨询/到店反馈。</li>
-          <li><span class="label">下一步：</span>接入大模型 API + 发布日历 + 数据复盘表。</li>
-        </ul>
-      </section>
-
-      <section class="wide">
-        <h2>6. 2 周验证计划</h2>
+      </div>
+      <div class="card">
+        <h2>5. 2 周验证计划</h2>
         <div class="timeline">
-          <div class="day"><strong>D1-D2</strong>访谈 8-10 家店，记录运营现状和预算。</div>
-          <div class="day"><strong>D3-D4</strong>筛 3 家试用店，采集门头/菜单/评论区。</div>
+          <div class="day"><strong>D1-D2</strong>访谈 8-10 家店，记录现状和预算。</div>
+          <div class="day"><strong>D3-D4</strong>筛 3 家试用店，采集门头/菜单/评论。</div>
           <div class="day"><strong>D5-D6</strong>生成增长包和店铺体检分。</div>
           <div class="day"><strong>D7-D9</strong>协助发布小红书、朋友圈、微信群。</div>
-          <div class="day"><strong>D10-D11</strong>记录浏览、咨询、进群、到店、采用率。</div>
+          <div class="day"><strong>D10-D11</strong>记录浏览、咨询、进群、到店。</div>
           <div class="day"><strong>D12-D13</strong>优化 Prompt、定价和交付格式。</div>
-          <div class="day"><strong>D14</strong>测试 99/299 元付费，决定是否继续。</div>
+          <div class="day"><strong>D14</strong>测试 99/299 元付费意愿。</div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
 
-    <div class="footer">
+    <footer>
       <div>原型/代码仓库：https://github.com/liangzhechen655/-ai</div>
       <div>参考：北大小微调查、美团商家 AI 实践、艾瑞 2025 私域电商白皮书。</div>
-    </div>
+    </footer>
   </main>
 </body>
 </html>

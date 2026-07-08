@@ -3,189 +3,178 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>校边 AI 小店参谋 Demo</title>
+  <title>校边 AI 小店参谋</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <main class="app-shell">
-    <aside class="sidebar">
+  <main class="shell">
+    <header class="topbar">
       <div class="brand">
-        <div class="brand-mark">AI</div>
+        <div class="mark">AI</div>
         <div>
           <h1>校边 AI 小店参谋</h1>
-          <p>给学校周边商家生成一周可执行的内容、活动和社群方案。</p>
+          <p>客群识别、增长诊断、内容交付、发布复盘</p>
         </div>
       </div>
+      <div class="top-actions">
+        <button id="copyBtn" type="button">复制增长包</button>
+        <button id="downloadBtn" type="button">导出 TXT</button>
+      </div>
+    </header>
 
-      <form id="merchantForm" class="merchant-form">
-        <div class="preset-row" aria-label="场景样例">
-          <button type="button" data-preset="student">学生奶茶</button>
-          <button type="button" data-preset="worker">工人快餐</button>
-          <button type="button" data-preset="faculty">教职工咖啡</button>
+    <section class="preset-bar" aria-label="场景样例">
+      <button class="preset active" type="button" data-preset="student">学生奶茶</button>
+      <button class="preset" type="button" data-preset="worker">工人快餐</button>
+      <button class="preset" type="button" data-preset="faculty">教职工咖啡</button>
+    </section>
+
+    <section class="workspace">
+      <aside class="input-panel">
+        <div class="panel-title">
+          <span>01</span>
+          <h2>店铺输入</h2>
         </div>
-
-        <label>
-          店铺类型
-          <select id="storeType">
-            <option>奶茶店</option>
-            <option>快餐店</option>
-            <option>咖啡店</option>
-            <option>小吃店</option>
-            <option>美甲店</option>
-            <option>打印店</option>
-            <option>桌游店</option>
-          </select>
-        </label>
-
-        <label>
-          店铺名称
-          <input id="storeName" value="南门柠檬茶" />
-        </label>
-
-        <label>
-          主推产品/服务
-          <textarea id="product" rows="3">手打柠檬茶、鸭屎香柠檬茶、第二杯半价</textarea>
-        </label>
-
-        <div class="form-grid">
+        <form id="merchantForm">
           <label>
-            主要客群
-            <select id="audienceType">
-              <option value="student">学生</option>
-              <option value="worker">周边工人</option>
-              <option value="faculty">教职工</option>
-              <option value="resident">社区居民</option>
-              <option value="office">上班族</option>
-              <option value="custom">自定义</option>
+            店铺类型
+            <select id="storeType">
+              <option>奶茶店</option>
+              <option>快餐店</option>
+              <option>咖啡店</option>
+              <option>小吃店</option>
+              <option>美甲店</option>
+              <option>打印店</option>
+              <option>桌游店</option>
             </select>
           </label>
           <label>
-            客单价
-            <input id="price" value="12-18 元" />
+            店铺名称
+            <input id="storeName" value="南门柠檬茶" />
           </label>
-        </div>
-
-        <div class="form-grid">
+          <label>
+            主推产品/服务
+            <textarea id="product" rows="3">手打柠檬茶、鸭屎香柠檬茶、第二杯半价</textarea>
+          </label>
+          <div class="split">
+            <label>
+              主要客群
+              <select id="audienceType">
+                <option value="student">学生</option>
+                <option value="worker">周边工人</option>
+                <option value="faculty">教职工</option>
+                <option value="resident">社区居民</option>
+                <option value="office">上班族</option>
+                <option value="custom">自定义</option>
+              </select>
+            </label>
+            <label>
+              客单价
+              <input id="price" value="12-18 元" />
+            </label>
+          </div>
           <label>
             顾客描述
             <input id="audience" value="下课后的大学生" />
           </label>
+          <div class="split">
+            <label>
+              经营半径
+              <select id="locationContext">
+                <option value="campus">学校门口/校内生活圈</option>
+                <option value="construction">工地/产业园旁</option>
+                <option value="office">写字楼/办公区旁</option>
+                <option value="community">社区/居民区旁</option>
+              </select>
+            </label>
+            <label>
+              本周目标
+              <select id="goal">
+                <option>提高到店客流</option>
+                <option>推广新品</option>
+                <option>提升社群复购</option>
+                <option>处理差评</option>
+              </select>
+            </label>
+          </div>
           <label>
-            经营半径
-            <select id="locationContext">
-              <option value="campus">学校门口/校内生活圈</option>
-              <option value="construction">工地/产业园旁</option>
-              <option value="office">写字楼/办公区旁</option>
-              <option value="community">社区/居民区旁</option>
+            店铺风格
+            <select id="tone">
+              <option>年轻有梗</option>
+              <option>温柔治愈</option>
+              <option>高性价比</option>
+              <option>专业可信</option>
             </select>
           </label>
+          <button class="primary" type="submit">生成增长工作台</button>
+        </form>
+      </aside>
+
+      <section class="main-panel">
+        <div class="panel-title">
+          <span>02</span>
+          <h2 id="outputTitle">南门柠檬茶 · 学生增长包</h2>
         </div>
 
-        <label>
-          本周目标
-          <select id="goal">
-            <option>提高到店客流</option>
-            <option>推广新品</option>
-            <option>提升社群复购</option>
-            <option>处理差评</option>
-          </select>
-        </label>
-
-        <label>
-          店铺风格
-          <select id="tone">
-            <option>年轻有梗</option>
-            <option>温柔治愈</option>
-            <option>高性价比</option>
-            <option>专业可信</option>
-          </select>
-        </label>
-
-        <button class="primary-btn" type="submit">生成内容包</button>
-      </form>
-    </aside>
-
-    <section class="workspace">
-      <header class="topbar">
-        <div>
-          <p class="eyebrow">MVP Prototype</p>
-          <h2 id="outputTitle">南门柠檬茶 · 7 天 AI 经营内容包</h2>
-        </div>
-        <div class="actions">
-          <button id="copyBtn" type="button" class="ghost-btn">复制</button>
-          <button id="downloadBtn" type="button" class="ghost-btn">导出 TXT</button>
-        </div>
-      </header>
-
-      <section class="summary-band">
-        <div>
-          <p class="eyebrow">本周策略</p>
-          <p id="strategyText" class="strategy-text"></p>
-        </div>
-        <div class="kpi-strip">
-          <div><strong>7</strong><span>图文</span></div>
-          <div><strong>3</strong><span>脚本</span></div>
-          <div><strong>10</strong><span>社群话术</span></div>
-          <div><strong>99</strong><span>元试用</span></div>
-        </div>
-      </section>
-
-      <section class="diagnosis-board">
-        <div>
-          <p class="eyebrow">AI 店铺体检</p>
-          <h3 id="healthScore">增长健康分 76</h3>
-        </div>
-        <div class="diagnosis-metrics">
-          <div><strong id="sceneScore">82</strong><span>学生场景感</span></div>
-          <div><strong id="conversionScore">68</strong><span>到店转化链路</span></div>
-          <div><strong id="communityScore">72</strong><span>社群复购设计</span></div>
-          <div><strong id="replyScore">80</strong><span>评论响应质量</span></div>
-        </div>
-      </section>
-
-      <nav class="tabs" aria-label="内容类型">
-        <button class="tab active" data-tab="diagnosis" type="button">AI 体检</button>
-        <button class="tab" data-tab="posts" type="button">图文内容</button>
-        <button class="tab" data-tab="scripts" type="button">短视频脚本</button>
-        <button class="tab" data-tab="community" type="button">社群评论</button>
-        <button class="tab" data-tab="validation" type="button">验证计划</button>
-      </nav>
-
-      <div class="content-layout">
-        <section id="output" class="output"></section>
-
-        <aside class="right-rail">
-          <section class="rail-section">
-            <h3>用户证据</h3>
-            <ul id="evidenceList"></ul>
-          </section>
-
-          <section class="rail-section">
-            <h3>AI 工作流</h3>
-            <ol class="workflow-list">
-              <li>店铺信息结构化</li>
-              <li>诊断经营短板</li>
-              <li>生成 A/B 内容</li>
-              <li>发布后复盘数据</li>
-            </ol>
-          </section>
-
-          <section class="rail-section">
-            <h3>商业化</h3>
-            <div class="price-list">
-              <div><strong>免费</strong><span>3 条内容试用</span></div>
-              <div><strong>99/周</strong><span>1 周内容包</span></div>
-              <div><strong>299/月</strong><span>每周内容 + 活动建议</span></div>
-              <div><strong>699/月</strong><span>评论、社群和复盘轻服务</span></div>
+        <section class="diagnosis">
+          <div class="score-card">
+            <div id="scoreRing" class="score-ring" style="--score: 77">
+              <strong id="healthScore">77</strong>
+              <span>增长健康分</span>
             </div>
-          </section>
+          </div>
+          <div class="profile-card">
+            <p class="eyebrow">客群画像</p>
+            <h3 id="profileTitle">学生 · 下课后/午饭前后/晚自习前</h3>
+            <p id="strategyText">围绕学生的下课、午饭前后、晚自习前节奏，把产品变成可追踪到店动作。</p>
+          </div>
+          <div class="metric-grid">
+            <div><strong id="sceneScore">81</strong><span id="sceneLabel">学生场景感</span></div>
+            <div><strong id="conversionScore">78</strong><span>转化链路</span></div>
+            <div><strong id="communityScore">72</strong><span>复购设计</span></div>
+            <div><strong id="replyScore">78</strong><span>评论响应</span></div>
+          </div>
+        </section>
 
-          <section class="rail-section">
-            <h3>通过标准</h3>
-            <p>两周内找到 3 家试用商家，至少 1 家愿意为 99/299 元套餐付费。</p>
-          </section>
-        </aside>
-      </div>
+        <nav class="tabs" aria-label="增长包内容">
+          <button class="tab active" data-tab="diagnosis" type="button">诊断</button>
+          <button class="tab" data-tab="posts" type="button">图文</button>
+          <button class="tab" data-tab="scripts" type="button">视频</button>
+          <button class="tab" data-tab="community" type="button">社群</button>
+          <button class="tab" data-tab="validation" type="button">复盘</button>
+        </nav>
+
+        <section id="output" class="output"></section>
+      </section>
+
+      <aside class="insight-panel">
+        <div class="panel-title">
+          <span>03</span>
+          <h2>验证看板</h2>
+        </div>
+        <section class="experiment">
+          <p class="eyebrow">本周实验</p>
+          <h3 id="experimentTitle">下课后暗号福利</h3>
+          <p id="experimentCopy">把“收藏/评论”转为到店暗号和进群动作。</p>
+        </section>
+        <section class="tracker">
+          <div><strong>30%</strong><span>内容采用率</span></div>
+          <div><strong>3</strong><span>试用门店</span></div>
+          <div><strong>99</strong><span>元付费测试</span></div>
+        </section>
+        <section class="rail-list">
+          <h3>用户证据</h3>
+          <ul id="evidenceList"></ul>
+        </section>
+        <section class="rail-list">
+          <h3>AI 工作流</h3>
+          <ol>
+            <li>结构化店铺信息</li>
+            <li>识别客群节奏</li>
+            <li>生成增长包</li>
+            <li>发布后复盘指标</li>
+          </ol>
+        </section>
+      </aside>
     </section>
   </main>
 

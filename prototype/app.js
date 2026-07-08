@@ -14,6 +14,10 @@ const evidenceList = document.querySelector("#evidenceList");
 const tabs = document.querySelectorAll(".tab");
 const presetButtons = document.querySelectorAll("[data-preset]");
 
+if (new URLSearchParams(window.location.search).get("shot") === "1") {
+  document.body.classList.add("shot-mode");
+}
+
 let currentTab = "diagnosis";
 let latestText = "";
 let currentData = {};

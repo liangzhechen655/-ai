@@ -426,6 +426,186 @@ input:focus, select:focus, textarea:focus {
 
 .toast.show { opacity: 1; }
 
+body.shot-mode {
+  overflow: hidden;
+}
+
+.shot-mode .shell {
+  max-width: none;
+  width: 2000px;
+  min-height: 900px;
+  padding: 18px 24px;
+  transform: scale(.8);
+  transform-origin: top left;
+}
+
+.shot-mode .topbar {
+  min-height: 60px;
+  margin-bottom: 10px;
+  padding: 10px 14px;
+  box-shadow: 0 8px 22px rgba(23,50,79,.05);
+}
+
+.shot-mode .mark {
+  width: 44px;
+  height: 44px;
+}
+
+.shot-mode h1 {
+  font-size: 22px;
+}
+
+.shot-mode .top-actions button,
+.shot-mode .preset,
+.shot-mode .primary {
+  min-height: 36px;
+  padding: 0 14px;
+}
+
+.shot-mode .preset-bar {
+  gap: 8px;
+  margin-bottom: 12px;
+  padding: 6px;
+}
+
+.shot-mode .workspace {
+  grid-template-columns: 315px minmax(690px, 1fr) 290px;
+  gap: 12px;
+}
+
+.shot-mode .input-panel,
+.shot-mode .insight-panel {
+  padding: 14px;
+}
+
+.shot-mode .main-panel {
+  padding: 14px;
+}
+
+.shot-mode .panel-title {
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.shot-mode .panel-title span {
+  width: 28px;
+  height: 28px;
+}
+
+.shot-mode h2 {
+  font-size: 19px;
+}
+
+.shot-mode form {
+  gap: 8px;
+}
+
+.shot-mode label {
+  gap: 4px;
+  font-size: 12px;
+}
+
+.shot-mode input,
+.shot-mode select,
+.shot-mode textarea {
+  min-height: 34px;
+  padding: 7px 9px;
+}
+
+.shot-mode textarea {
+  height: 56px;
+}
+
+.shot-mode .diagnosis {
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.shot-mode .score-card {
+  padding: 10px;
+}
+
+.shot-mode .score-ring {
+  width: 96px;
+  height: 96px;
+}
+
+.shot-mode .score-ring strong {
+  font-size: 26px;
+}
+
+.shot-mode .score-ring span {
+  margin-top: -28px;
+  font-size: 10px;
+}
+
+.shot-mode .profile-card {
+  padding: 14px;
+}
+
+.shot-mode .profile-card h3 {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.shot-mode .metric-grid {
+  gap: 8px;
+}
+
+.shot-mode .metric-grid div {
+  padding: 10px;
+}
+
+.shot-mode .metric-grid strong {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.shot-mode .tabs {
+  gap: 6px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.shot-mode .tab {
+  min-height: 34px;
+}
+
+.shot-mode .output {
+  gap: 10px;
+}
+
+.shot-mode .output-card {
+  padding: 12px;
+}
+
+.shot-mode .output-card h3 {
+  font-size: 17px;
+  margin-bottom: 7px;
+}
+
+.shot-mode .output-card li,
+.shot-mode .rail-list li {
+  margin-bottom: 5px;
+}
+
+.shot-mode .experiment {
+  padding: 12px;
+  margin-bottom: 9px;
+}
+
+.shot-mode .tracker {
+  gap: 8px;
+  margin-bottom: 9px;
+}
+
+.shot-mode .tracker div,
+.shot-mode .rail-list {
+  padding: 11px;
+}
+
 @media (max-width: 1180px) {
   .workspace {
     grid-template-columns: 320px minmax(0, 1fr);

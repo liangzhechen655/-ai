@@ -100,24 +100,26 @@
       border: 1pt solid #17324f;
       background: #fff;
       padding: 3mm;
-      display: grid;
-      grid-template-columns: 1.32fr 0.68fr;
-      gap: 3mm;
-      min-height: 120mm;
+      min-height: 122mm;
     }
     .prototype-shot {
       border: 0.8pt solid #cbd5df;
       background: #eef3f6;
       padding: 1.8mm;
-      height: 83mm;
+      height: 80mm;
       overflow: hidden;
+      display: grid;
+      place-items: center;
     }
     .prototype-shot img {
       display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top left;
+      width: auto;
+      height: 76mm;
+      max-width: none;
+      max-height: none;
+      justify-self: center;
+      align-self: start;
+      background: #eef3f6;
     }
     .caption {
       margin-top: 1.6mm;
@@ -126,7 +128,9 @@
     }
     .mvp-side {
       display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 2mm;
+      margin-top: 2mm;
     }
     .mini-block {
       background: #f7f9f8;
@@ -151,6 +155,16 @@
       grid-template-columns: repeat(5, 1fr);
       gap: 1.5mm;
       margin-top: 2mm;
+    }
+    .mini-block .prompt-flow {
+      grid-template-columns: 1fr;
+      gap: 1mm;
+      margin-top: 0;
+    }
+    .mini-block .step {
+      min-height: 8mm;
+      padding: 1mm;
+      font-size: 6.3pt;
     }
     .step {
       background: #e8f3ef;
@@ -262,21 +276,11 @@
     </section>
 
     <section class="mvp-section">
-      <div>
-        <h2>3. MVP 样例：真实 Demo 页面原型图</h2>
-        <div class="prototype-shot">
-          <img src="preview/prototype-a4.png" alt="校边 AI 小店参谋 Demo 页面截图" />
-        </div>
-        <p class="caption">原型页面：左侧店铺输入，中间客群切换 + AI 诊断仪表 + 增长包，右侧验证看板；支持学生奶茶、工人快餐、教职工咖啡 3 个场景。</p>
-        <div class="prompt-flow">
-          <div class="step">店铺信息</div>
-          <div class="step">客群画像</div>
-          <div class="step">AI 诊断</div>
-          <div class="step">生成增长包</div>
-          <div class="step">回填指标</div>
-        </div>
+      <h2>3. MVP 样例：真实 Demo 页面原型图</h2>
+      <div class="prototype-shot">
+        <img src="preview/prototype-a4.png" alt="校边 AI 小店参谋 Demo 页面完整截图" />
       </div>
-
+      <p class="caption">原型页面完整截图：左侧店铺输入，中间客群切换 + AI 诊断仪表 + 增长包，右侧验证看板；支持学生奶茶、工人快餐、教职工咖啡 3 个场景。</p>
       <div class="mvp-side">
         <div class="mini-block dark">
           <h3>Demo 页面交互</h3>
@@ -289,12 +293,12 @@
         </div>
         <div class="mini-block">
           <h3>Prompt 流程</h3>
-          <ol>
-            <li>识别客群：学生/工人/教职工/居民。</li>
-            <li>抽取节奏：下课、午休、下班、接娃。</li>
-            <li>生成动作：暗号、拼单、预约、进群。</li>
-            <li>输出内容：图文、视频脚本、评论回复。</li>
-          </ol>
+          <div class="prompt-flow">
+            <div class="step">识别客群</div>
+            <div class="step">抽取节奏</div>
+            <div class="step">生成动作</div>
+            <div class="step">输出内容</div>
+          </div>
         </div>
       </div>
     </section>

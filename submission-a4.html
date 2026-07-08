@@ -121,6 +121,127 @@
       font-size: 7.1pt;
       font-weight: 800;
     }
+    .prototype-mock {
+      display: grid;
+      grid-template-columns: 0.72fr 1.55fr 0.85fr;
+      gap: 2mm;
+      margin-top: 2mm;
+      border: 0.8pt solid #cbd5df;
+      background: #eef3f6;
+      padding: 2.4mm;
+      min-height: 52mm;
+    }
+    .mock-panel {
+      background: #fff;
+      border: 0.7pt solid #d3d8df;
+      padding: 2mm;
+    }
+    .mock-title {
+      color: #17324f;
+      font-size: 7.2pt;
+      font-weight: 800;
+      margin-bottom: 1.5mm;
+    }
+    .mock-field {
+      height: 5.2mm;
+      margin-bottom: 1.4mm;
+      background: #f4f7f6;
+      border: 0.6pt solid #d8e2e8;
+    }
+    .mock-chip-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1mm;
+      margin-bottom: 1.8mm;
+    }
+    .mock-chip {
+      height: 5.2mm;
+      display: grid;
+      place-items: center;
+      background: #e8f3ef;
+      color: #17324f;
+      font-size: 6pt;
+      font-weight: 800;
+    }
+    .mock-chip.active {
+      background: #2f6f5e;
+      color: #fff;
+    }
+    .mock-score {
+      display: grid;
+      grid-template-columns: 18mm 1fr;
+      gap: 2mm;
+      margin-bottom: 2mm;
+    }
+    .mock-ring {
+      width: 18mm;
+      height: 18mm;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #17324f;
+      font-size: 10pt;
+      font-weight: 900;
+      background:
+        radial-gradient(circle at center, #fff 0 53%, transparent 54%),
+        conic-gradient(#2f6f5e 77%, #dfe5eb 0);
+    }
+    .mock-headline {
+      background: #f4f7f6;
+      padding: 1.8mm;
+      color: #17324f;
+      font-size: 7pt;
+      font-weight: 800;
+    }
+    .mock-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1mm;
+      margin-bottom: 2mm;
+    }
+    .mock-metrics div {
+      background: #e8f3ef;
+      border-left: 2pt solid #2f6f5e;
+      padding: 1.3mm;
+      min-height: 10mm;
+      color: #17324f;
+      font-size: 6pt;
+      font-weight: 800;
+    }
+    .mock-result {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.3mm;
+    }
+    .mock-result div {
+      min-height: 12mm;
+      background: #fff;
+      border: 0.6pt solid #d3d8df;
+      padding: 1.5mm;
+      font-size: 6.2pt;
+      color: #142033;
+    }
+    .mock-side-card {
+      background: #17324f;
+      color: #fff;
+      padding: 2mm;
+      font-size: 6.4pt;
+      margin-bottom: 1.5mm;
+      min-height: 18mm;
+    }
+    .mock-kpi {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1mm;
+    }
+    .mock-kpi div {
+      background: #fff8df;
+      border-left: 2pt solid #f0cc68;
+      padding: 1.5mm;
+      font-size: 6pt;
+      color: #17324f;
+      font-weight: 800;
+    }
     .timeline {
       grid-template-columns: repeat(7, 1fr);
     }
@@ -186,18 +307,45 @@
 
       <section class="wide">
         <h2>3. MVP 样例：可交互 Demo 页面</h2>
-        <p><span class="label">MVP 不是完整 SaaS：</span>只做一个可点击页面，验证老板能否在 3 分钟内理解“客群诊断 + 一周增长包”，并愿意发布/付费。</p>
-        <div class="mvp-row">
-          <div class="screen"><strong>输入屏</strong><span>店铺类型、产品、客单价、主要客群、经营半径、周目标。内置学生奶茶/工人快餐/教职工咖啡。</span></div>
-          <div class="screen"><strong>诊断屏</strong><span>输出增长健康分、客群节奏、购买动机、短板和本周增长实验。</span></div>
-          <div class="screen"><strong>交付屏</strong><span>生成 7 天图文、3 条视频脚本、社群/评论话术，并支持复制/导出。</span></div>
-        </div>
-        <div class="flow">
-          <div class="step">填 6 个字段</div>
-          <div class="step">选择客群样例</div>
-          <div class="step">AI 给诊断</div>
-          <div class="step">发布增长包</div>
-          <div class="step">回填指标</div>
+        <p><span class="label">MVP 不是完整 SaaS：</span>只做一个可点击页面，验证老板能否在 3 分钟内理解“客群诊断 + 一周增长包”，并愿意发布/付费。下方缩略图对应真实原型页面布局。</p>
+        <div class="prototype-mock">
+          <div class="mock-panel">
+            <div class="mock-title">01 店铺输入</div>
+            <div class="mock-field"></div>
+            <div class="mock-field"></div>
+            <div class="mock-field" style="height:12mm;"></div>
+            <div class="mock-field"></div>
+            <div class="mock-field"></div>
+          </div>
+          <div class="mock-panel">
+            <div class="mock-chip-row">
+              <div class="mock-chip active">学生奶茶</div>
+              <div class="mock-chip">工人快餐</div>
+              <div class="mock-chip">教职工咖啡</div>
+            </div>
+            <div class="mock-score">
+              <div class="mock-ring">77</div>
+              <div class="mock-headline">学生 · 下课后/午饭前后/晚自习前<br>生成诊断结论和本周增长实验</div>
+            </div>
+            <div class="mock-metrics">
+              <div>场景感<br>81</div>
+              <div>转化链路<br>78</div>
+              <div>复购设计<br>72</div>
+              <div>评论响应<br>78</div>
+            </div>
+            <div class="mock-result">
+              <div><strong>诊断结论</strong><br>客群节奏、购买动机、短板。</div>
+              <div><strong>增长包</strong><br>7 天图文、视频脚本、社群话术。</div>
+            </div>
+          </div>
+          <div class="mock-panel">
+            <div class="mock-title">03 验证看板</div>
+            <div class="mock-side-card">本周实验：下课后暗号福利<br>追踪收藏、到店暗号、进群人数。</div>
+            <div class="mock-kpi">
+              <div>30%<br>采用率</div>
+              <div>99<br>付费测试</div>
+            </div>
+          </div>
         </div>
       </section>
 

@@ -80,15 +80,15 @@
     }
     .evidence-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5mm;
+      grid-template-columns: 1fr;
+      gap: 1.2mm;
     }
     .evidence {
       background: #f3f6f5;
       border-left: 3pt solid #2f6f5e;
-      padding: 1.8mm;
-      min-height: 19mm;
-      font-size: 6.75pt;
+      padding: 1.35mm 1.8mm;
+      min-height: 0;
+      font-size: 6.65pt;
     }
     .evidence strong {
       display: block;
@@ -126,45 +126,36 @@
       color: #526174;
       font-size: 6.8pt;
     }
-    .mvp-side {
+    .reasoning-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 2mm;
-      margin-top: 2mm;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.8mm;
+      margin-top: 1.8mm;
     }
-    .mini-block {
+    .reasoning {
       background: #f7f9f8;
       border: 0.8pt solid #d4dae2;
-      padding: 2.2mm;
+      padding: 2mm;
+      min-height: 28mm;
     }
-    .mini-block.dark {
+    .reasoning.dark {
       background: #17324f;
       color: #fff;
       border-color: #17324f;
     }
-    .mini-block.dark h3, .mini-block.dark p { color: #fff; }
+    .reasoning.dark h3, .reasoning.dark p { color: #fff; }
     h3 {
       margin: 0 0 1.3mm;
       color: #17324f;
       font-size: 8.8pt;
       line-height: 1.15;
     }
-    .mini-block p, .mini-block li { font-size: 6.85pt; }
+    .reasoning p, .reasoning li { font-size: 6.65pt; }
     .prompt-flow {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 1.5mm;
       margin-top: 2mm;
-    }
-    .mini-block .prompt-flow {
-      grid-template-columns: 1fr;
-      gap: 1mm;
-      margin-top: 0;
-    }
-    .mini-block .step {
-      min-height: 8mm;
-      padding: 1mm;
-      font-size: 6.3pt;
     }
     .step {
       background: #e8f3ef;
@@ -241,7 +232,7 @@
     <header>
       <div>
         <h1>校边 AI 小店参谋</h1>
-        <p class="subtitle">小微 AI 方向。给学校周边小店做“客群识别 - 增长诊断 - 内容生成 - 发布复盘”的轻量 AI 工作台，验证店主是否愿意为可执行增长包付费。</p>
+        <p class="subtitle">给校门口奶茶、快餐、咖啡小店用：店主填店铺和顾客情况，AI 直接告诉他本周该拉哪类客、发什么活动、用什么朋友圈/小红书/社群话术，并记录有没有带来进店。</p>
       </div>
       <div class="stat-strip">
         <div class="stat"><strong>3</strong><span>试用门店</span></div>
@@ -253,16 +244,16 @@
     <section class="top-grid">
       <div class="card">
         <h2>1. 机会判断</h2>
-        <p><span class="label">目标用户：</span>学校周边 1-5 人小店：奶茶、咖啡、快餐、小吃、美甲、打印、桌游。</p>
-        <p><span class="label">痛点：</span>会开店但不会稳定做内容；不知道如何把浏览转成到店、进群和复购；请代运营太贵。</p>
-        <p><span class="label">为什么现在：</span>AI 已能低成本完成内容、视觉、接待和经营分析，小店需要可复制执行的增长包。</p>
+        <p><span class="label">目标用户：</span>学校 500 米内 1-5 人小店，老板兼收银/出品/运营，没有专门新媒体同学。</p>
+        <p><span class="label">真痛点：</span>不是“缺一篇文案”，而是不知道今天该拉谁、发什么活动、发完看什么数据。</p>
+        <p><span class="label">为什么现在：</span>AI 能把菜单、客群、评论转成可执行动作；校园客群节奏固定，适合快速模板化验证。</p>
       </div>
       <div class="card">
         <h2>2. 用户证据</h2>
         <div class="evidence-row">
-          <div class="evidence"><strong>经营压力</strong>北大小微调查：需求不足、利润承压，线上经营是重要抓手。</div>
-          <div class="evidence"><strong>AI 进店</strong>美团 AI 视觉设计师服务 44.8 万商家，AI 接待员处理深夜咨询。</div>
-          <div class="evidence"><strong>私域刚需</strong>艾瑞 2025：商家重视降低获客成本和促进转化。</div>
+          <div class="evidence"><strong>小店愿意要结果</strong>北大小微调查显示需求不足、利润承压。推论：老板不会为“漂亮文案”付费，会为能带到店/进群的动作付费。</div>
+          <div class="evidence"><strong>AI 已开始进小店</strong>美团商家 AI 设计/接待工具已有规模使用。推论：机会不在“教育老板用 AI”，而在把 AI 结果做得更本地、更可执行。</div>
+          <div class="evidence"><strong>校园场景可标准化</strong>下课、午休、晚自习前、宿舍拼单是稳定时段。推论：先做奶茶/快餐/咖啡 3 类高频店，比泛化全行业更容易验证。</div>
         </div>
       </div>
       <div class="card">
@@ -280,25 +271,23 @@
       <div class="prototype-shot">
         <img src="preview/prototype-a4.png" alt="校边 AI 小店参谋 Demo 页面完整截图" />
       </div>
-      <p class="caption">原型页面完整截图：左侧店铺输入，中间客群切换 + AI 诊断仪表 + 增长包，右侧验证看板；支持学生奶茶、工人快餐、教职工咖啡 3 个场景。</p>
-      <div class="mvp-side">
-        <div class="mini-block dark">
-          <h3>Demo 页面交互</h3>
-          <p>选择“学生奶茶/工人快餐/教职工咖啡”后，页面自动生成客群节奏、购买动机、增长健康分、图文/视频/社群话术，并可复制/导出。</p>
+      <p class="caption">MVP 不是完整 SaaS，而是一个能当场演示的页面：验证老板是否能在 3 分钟看懂，并愿意把 AI 生成的“本周拉客动作”真实发布。</p>
+      <div class="reasoning-grid">
+        <div class="reasoning dark">
+          <h3>输入什么</h3>
+          <p>店铺类型、主推产品、客单价、目标顾客、本周目标、经营半径；尽量用老板听得懂的字段，不让他填复杂运营表。</p>
         </div>
-        <div class="mini-block">
-          <h3>内容样片</h3>
-          <p><span class="label">工人快餐：</span>“午休 20 分钟来店报暗号，15-22 元大份盖浇饭，支持工友拼单和电话预订。”</p>
-          <p><span class="label">学生奶茶：</span>“下课后报暗号，第二杯半价，引导宿舍拼单和进群领下周福利。”</p>
+        <div class="reasoning">
+          <h3>AI 怎么想</h3>
+          <p>先判断客群节奏，再匹配购买动机，最后生成“到店暗号、拼单、预订、进群、评论回复”等可追踪动作。</p>
         </div>
-        <div class="mini-block">
-          <h3>Prompt 流程</h3>
-          <div class="prompt-flow">
-            <div class="step">识别客群</div>
-            <div class="step">抽取节奏</div>
-            <div class="step">生成动作</div>
-            <div class="step">输出内容</div>
-          </div>
+        <div class="reasoning">
+          <h3>交付什么</h3>
+          <p>1 个本周活动、3 条图文/朋友圈文案、2 条短视频脚本、5 条评论回复、1 张复盘表；支持复制/导出。</p>
+        </div>
+        <div class="reasoning">
+          <h3>怎么证明有用</h3>
+          <p>不看点赞，优先看收藏/评论、到店报暗号、进群人数、拼单/预订次数；这些才和老板收入更近。</p>
         </div>
       </div>
     </section>
